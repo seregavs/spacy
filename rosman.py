@@ -3,7 +3,7 @@ import spacy
 import mysql.connector
 
 # constants begin
-blockfile   = 'text01.txt'
+blockfile   = 'corpus/text01.txt'
 blockid     =   1
 cursor      = None
 sql_insert_spacynlp = (
