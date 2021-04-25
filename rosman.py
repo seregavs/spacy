@@ -22,7 +22,7 @@ os.system('cls' if os.name == 'nt' else 'clear')
 
 cnx = mysql.connector.connect(
     user=LC_DBUSER, database=LC_DATABASE, host=LC_DBHOST, password=LC_DBPASS, port=LC_DBPORT)
-if cnx is None:
+if not cnx:
     print('No connection made')
     quit()
 
@@ -47,7 +47,6 @@ for block in blocks:
     print('Block ' + str(blockid) + '('+blockfile+'): ' + str(linesCount))
     printProgressBar(0, linesCount)
     for index, line in enumerate(lines):
-        # print(index, line)
         doc = nlp(line)
         for token_index, token in enumerate(doc):
             sql_data_insert_spacynlp = (
@@ -55,7 +54,6 @@ for block in blocks:
             # print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_)
             if cursor:
                 cursor.execute(sql_insert_spacynlp, sql_data_insert_spacynlp)
-        # print('block ', blockid, ' line ', index, ' handled')
         if index%LC_COMMIT_EVERY_N_ROWS == 0:
             cnx.commit()
             printProgressBar(index + 1, linesCount)

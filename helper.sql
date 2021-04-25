@@ -16,11 +16,21 @@ CREATE TABLE `block` (
   PRIMARY KEY (`block`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 
-UPDATE `alpine`.`block` SET `filename` = '01_rosman.txt' WHERE (`block` = '1');
+DELETE FROM `alpine`.`block` WHERE block >= 1; -- because of safe mode in SQL Workbench
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('1', '01_rosman.txt');
 INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('2', '01_spivak.txt');
 INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('3', '02_rosman.txt');
 INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('4', '02_spivak.txt');
-
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('5', '03_rosman.txt');
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('6', '03_spivak.txt');
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('7', '04_rosman.txt');
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('8', '04_spivak.txt');
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('9', '05_rosman.txt');
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('10', '05_spivak.txt');
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('11', '06_rosman.txt');
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('12', '06_spivak.txt');
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('13', '07_rosman.txt');
+INSERT INTO `alpine`.`block` (`block`, `filename`) VALUES ('14', '07_spivak.txt');
 
 SELECT DISTINCT block, token_text, token_lemma FROM alpine.spacynlp
  WHERE token_tag = 'VERB'
@@ -31,4 +41,8 @@ SELECT DISTINCT block, token_text, token_lemma FROM alpine.spacynlp
         ( substring(token_lemma,-2,2) = 'чь' ))
  ORDER BY block, token_lemma ASC;
 
- 
+ -- total number of verbs by block
+SELECT block, count(*) as cnt_VERB
+  FROM alpine.spacynlp
+ WHERE token_tag = 'VERB'
+ GROUP BY block;
