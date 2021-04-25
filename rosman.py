@@ -2,7 +2,7 @@
 import spacy
 import mysql.connector
 import os
-# import time
+import datetime
 from constants import *
 from progressbar import *
 
@@ -32,6 +32,7 @@ cursor.execute(sql_select_block)
 blocks = cursor.fetchall()
 nlp = spacy.load('ru_core_news_lg')
 
+begin_time = datetime.datetime.now().replace(microsecond=0)
 for block in blocks:
     blockid = int(block[0])
     sql_data_delete_spacynlp = (blockid, )
@@ -59,6 +60,7 @@ for block in blocks:
             printProgressBar(index + 1, linesCount)
     printProgressBar( linesCount, linesCount)
     cnx.commit()
-    # print('block ', blockid, ' done')
+    print('block ', blockid, ' done')
+    # break
 cnx.close()
-print('All done')
+print('All done. Duration is ' + str(datetime.datetime.now().replace(microsecond=0) - begin_time))
