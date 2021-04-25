@@ -1,12 +1,13 @@
 # coding: utf-8
 import spacy
 import mysql.connector
+import os
+from constants import *
 
-# constants begin
 blockid     =   0
 cursor      = None
 
-sql_select_block = ( "SELECT block, filename FROM alpine.block")
+sql_select_block = ( "SELECT block, filename FROM alpine.block ORDER BY block")
 
 sql_insert_spacynlp = (
     "INSERT INTO `alpine`.`spacynlp` (`block`, `line`, `token_index`, `token_text`, `token_lemma`, `token_pos`, `token_tag`, `token_dep`)"
@@ -14,9 +15,9 @@ sql_insert_spacynlp = (
 sql_delete_spacynlp = ( 
     "DELETE FROM `alpine`.`spacynlp` WHERE (`block` = %s)")
 
-# constants end 
+os.system('cls' if os.name == 'nt' else 'clear') # clear terminal before report run
 
-cnx = mysql.connector.connect(user='ALPINE', database='alpine', host='127.0.0.1', password='Init$12345', port = 3306)
+cnx = mysql.connector.connect(user=LC_DBUSER, database=LC_DATABASE, host=LC_DBHOST, password=LC_DBPASS, port = LC_DBPORT)
 if cnx is None:
     print('No connection made')
     quit()
