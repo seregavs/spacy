@@ -11,6 +11,7 @@ def printProgressBar (iteration, total, prefix = 'Progress:', suffix = 'Complete
         length      - Optional  : character length of bar (Int)
         fill        - Optional  : bar fill character (Str)
         printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+        \r in the begining and at th end of the  line makes possible to print on the same line without carriage return
     """
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)

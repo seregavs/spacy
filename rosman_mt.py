@@ -55,7 +55,6 @@ def nlp_corpus(block):
     with open(blockfile, encoding="utf-8") as f:
         lines = (line.rstrip() for line in f)
         lines = list(line for line in lines if line)
-    linesCount = len(lines)
     for index, line in enumerate(lines):
         doc = nlp(line)
         for token_index, token in enumerate(doc):
